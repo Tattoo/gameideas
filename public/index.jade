@@ -4,20 +4,41 @@ block page_script
   script
     $(document).ready(function(){
       $("#submit").click(function(){
+        var $this = $( this )
+            idea = $("#idea").val()
+            title = $("#idea-title").val();
 
-        var $this = $( this );
+        if ( idea === "" || title === "" ){
+          $this.addClass( "btn-danger" ).val( "Empty :|" );
+          return;
+        }
+        
         jQuery.post("/create", {
-          "thankyou": $("#thanks").val()
+            "idea": idea
+          , "title": title
         }, function(){
-          $this.addClass( "btn-success" ).val( "Tallennettu :)" );
+          $this.addClass( "btn-success" ).val( "Saved :)" );
         }).fail(function(){
-          $this.addClass( "btn-danger" ).val( "Epäonnistui D:" );
+          $this.addClass( "btn-danger" ).val( "Failed D:" );
         });
 
       });
     });
 
 block content
-  h1 Kiitollisuuspurkki
-  textarea#thanks
-  input(type="submit", value="Tallenna")#submit.btn.btn-large.btn-primary
+  h1.main-heading game ideas
+  textarea#idea
+  input(type="text")#idea-title
+  input(type="submit", value="Submit")#submit.btn.btn-large.btn-primary
+
+  each idea in ideas
+    a.idea-title= idea.title
+    div.well
+      p.idea-body
+        !{idea.body}
+      p.time
+        - if (typeof(idea.date) == "string"){
+          = idea.date
+        - } else {
+          At #{idea.date.toLocaleTimeString().split(":").splice(0, 2).join(":")} on #{idea.date.toLocaleDateString()}
+        - }

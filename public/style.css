@@ -9,10 +9,14 @@ body {
 
 }
 
-#thanks {
+#idea {
   width: 96%;
   height: 10em;
   border: 5px solid #24292d;
+}
+
+#idea-title {
+  width: 96%;
 }
 
 #submit {
@@ -23,10 +27,12 @@ body {
 
 .well {
   color: #2c4762;
+  margin: 2em 0;
 }
 
-.well:first-child {
-  margin-top: 2em;
+.main-heading {
+  font-variant: small-caps;
+  margin-bottom: 1em;
 }
 
 .thank-you {

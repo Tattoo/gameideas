@@ -1,50 +1,54 @@
 var express = require( "express" ),
     mongojs = require( "mongojs" ),
-    moment = require( "moment" );
+    moment = require( "moment" ),
+    markdown = require( "markdown" ).markdown;
     
 var app = express.createServer( express.logger() ),
-    db_uri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || "kiitollisuuspurkki",
-    db = mongojs.connect( db_uri, [ "thanks" ] );
+    db_uri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || "gameideas",
+    db = mongojs.connect( db_uri, [ "ideas" ] );
 
 app.set( "views", __dirname + "/public" );
 app.set( "view options", { "layout": false} );
-moment.lang( "fi" );
 
 app.use(express.static( __dirname + '/public' ));
 app.use( express.bodyParser() );
 
 app.get( "/", function(req, res) {
-  res.render( "index.jade" );
+  db.ideas.find().sort({ date: 1 }, function( err, collection ){
+    var ideas;    
+    if ( !err ) {
+      
+      ideas = collection.map(function( idea ){
+        return {
+            "body": markdown.toHTML( idea.body )
+          , "title": idea.title
+          , "date": idea.date
+        };
+      });
+      console.log(ideas);
+      res.render( "index.jade", { "ideas": ideas } );
+      
+    }
+  });
 });
 
 app.post( "/create", function( req, res ){
-  if ( !req.body.thankyou ) {
+  if ( !req.body.idea || !req.body.title ) {
+    console.log("pling");
     res.send(400);
   }
 
-  db.thanks.save({
-      "thankyou": req.body.thankyou
+  db.ideas.save({
+      "body": req.body.idea
+    , "title": req.body.title
     , "date": new Date()
   }, function( err ){
     if ( err ){
+      console.log("plong");
       res.send(500);
     }
 
     res.send(200);
-  });
-});
-
-app.get( "/view", function( req, res ){
-  
-  if ( (new Date()).getYear() < 2014 ) {
-    res.render( "thanks.jade", { "thanks": [{
-        "thankyou": "<h1>Ei vielä! :)</h1>"
-      , "date": "Vasta " + moment().endOf( "year" ).fromNow()
-    }]});
-  }
-  
-  db.thanks.find().sort({ date: 1 }, function( err, thanks ){
-    res.render( "wishes.jade", { "thanks": thanks } );
   });
 });
 

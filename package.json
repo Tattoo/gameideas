@@ -6,7 +6,8 @@
     "mongodb": "1.1.11",
     "mongojs": "latest",
     "jade": "latest",
-    "moment": "latest"
+    "moment": "latest",
+    "markdown": "0.4.0"
   },
   "engines": {
     "node": "0.8.x",
