@@ -1,0 +1,52 @@
+a(href="#")#hide-reference [hide]
+h2 Markdown reference
+h3 Paragraphs and line breaks
+p A paragraph is simply one or more consecutive lines of text, separated by one or more blank lines. (A blank line is any line that looks like a blank line — a line containing nothing but spaces or tabs is considered blank.) Normal paragraphs should not be indented with spaces or tabs.
+h3 Headers
+pre # This is an H1
+  ## This is an H2
+  ###### This is an H6
+h3 Links
+pre
+  |This is [an example](http://example.com/ "Title") inline link.
+pre
+  |[This link](http://example.net/) has no title attribute.
+h3 Emphasis
+pre *single asterisks*
+  |_single underscores_
+  |**double asterisks**
+  |__double underscores__
+|will produce:
+pre
+  <em>single asterisks</em>
+  <em>single underscores</em>
+  <strong>double asterisks</strong>
+  <strong>double underscores</strong>
+h3 Lists
+pre
+  * Red
+  * Green
+  * Blue
+| is equivalent to:
+pre
+  |- Red
+  |- Green
+  |- Blue
+| Number lists:
+pre
+  |1. Foo
+  |1. Bar
+  |1. Baz
+|This is numbered correctly. In general, order of numbers do not matter in ordered lists.
+h3 Horizontal rules
+| You can produce a horizontal rule tag (&lt;hr /&gt;) by placing three or more hyphens, asterisks, or underscores on a line by themselves. If you wish, you may use spaces between the hyphens or asterisks.
+h3 Images
+pre ![Alt text](/path/to/img.jpg)
+  ![Alt text](/path/to/img.jpg "Optional title")
+h3 Blockquotes
+pre > This is a blockquote. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+h3 Code blocks
+pre
+  |This is a normal paragraph:
+  |    This is a code block
+

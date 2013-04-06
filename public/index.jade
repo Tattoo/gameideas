@@ -1,38 +1,18 @@
 extends layout
 
-block page_script
-  script
-    $(document).ready(function(){
-      $("#submit").click(function(){
-        var $this = $( this )
-            idea = $("#idea").val()
-            title = $("#idea-title").val();
-
-        if ( idea === "" || title === "" ){
-          $this.addClass( "btn-danger" ).val( "Empty :|" );
-          return;
-        }
-        
-        jQuery.post("/create", {
-            "idea": idea
-          , "title": title
-        }, function(){
-          $this.addClass( "btn-success" ).val( "Saved :)" );
-        }).fail(function(){
-          $this.addClass( "btn-danger" ).val( "Failed D:" );
-        });
-
-      });
-    });
-
 block content
   h1.main-heading game ideas
-  textarea#idea
-  input(type="text")#idea-title
+  p#markdown-reference-link
+    |uses Markdown, see
+    a(href="#") reference
+  textarea#idea(placeholder="Insert description")
+  input(type="text", placeholder="Insert title")#idea-title
   input(type="submit", value="Submit")#submit.btn.btn-large.btn-primary
 
   each idea in ideas
-    a.idea-title= idea.title
+
+    a.idea-title
+      h2= idea.title
     div.well
       p.idea-body
         !{idea.body}
