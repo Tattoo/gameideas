@@ -1,0 +1,23 @@
+extends layout
+
+block page_script
+  script
+    $(document).ready(function(){
+      $("#submit").click(function(){
+
+        var $this = $( this );
+        jQuery.post("/create", {
+          "thankyou": $("#thanks").val()
+        }, function(){
+          $this.addClass( "btn-success" ).val( "Tallennettu :)" );
+        }).fail(function(){
+          $this.addClass( "btn-danger" ).val( "Epäonnistui D:" );
+        });
+
+      });
+    });
+
+block content
+  h1 Kiitollisuuspurkki
+  textarea#thanks
+  input(type="submit", value="Tallenna")#submit.btn.btn-large.btn-primary
