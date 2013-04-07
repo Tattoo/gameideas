@@ -56,11 +56,14 @@ a:hover {
 }
 
 #idea,
-#idea-title {
+#idea-title,
+.edit-body,
+.edit-title {
   border: 5px solid #24292d;
 }
 
-#idea {
+#idea,
+.edit-body {
   width: 96%;
   height: 10em;
 }
@@ -81,6 +84,11 @@ a:hover {
   display: none;
 }
 
+.idea-edit-link {
+  display: block;
+  text-align: right;
+}
+
 .main-heading {
   margin-bottom: 1em;
   text-align: center;
@@ -93,4 +101,8 @@ a:hover {
 .time {
   font-size: 0.8em;
   font-style: italic;
+}
+
+.edit-title {
+  margin-top: 1em;
 }

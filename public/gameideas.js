@@ -18,6 +18,18 @@ function add_to_page( idea_body, idea_title, date) {
   $( "#game-ideas" ).prepend( template );
 }
 
+function edit_idea( target ){
+  var $target = $( target ),
+      $title_element = $target.find( ".idea-title" ),
+      title = $title_element.text(),
+      $body_element = $target.find( ".idea-body" ),
+      body = $target.find( ".idea-original" ).val();
+
+      $( '<br /><button class="edit-button btn btn-mini">Save</button><button class="cancel-button btn btn-mini">Cancel</button>' ).insertAfter( $body_element );
+      $title_element.replaceWith( '<input type="text" class="edit-title" value="' + title + '" />' );
+      $body_element.replaceWith( '<textarea class="edit-body">' + body + '</textarea>' );
+}
+
 $(document).ready(function(){
 
   $("#submit").click(function(){
@@ -34,16 +46,23 @@ $(document).ready(function(){
         "idea": idea
       , "title": title
     }, function(){
+
       $this.addClass( "btn-success" ).val( "Saved :)" );
-      add_to_page(idea, title, new Date())
+      add_to_page(idea, title, new Date());
+      $( "#idea, #idea-title" ).val( "" );
+
     }).fail(function(){
       $this.addClass( "btn-danger" ).val( "Failed D:" );
     });
 
   });
 
-  $( document ).on( "click", ".idea-title", function(){
+  $( document ).on( "click", ".idea-title", function( ev ){
+    ev.preventDefault();
     $( this ).next().slideToggle( {"easing": "linear"} );
+  }).on( "click", ".idea-edit-link", function( ev ){
+    ev.preventDefault();
+    edit_idea( $(this).parent().parent() );
   });
 
   $( "#markdown-reference-link > a" ).click(function( ev ){

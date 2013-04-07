@@ -22,6 +22,7 @@ app.get( "/", function(req, res) {
             "body": markdown.toHTML( idea.body )
           , "title": idea.title
           , "date": idea.date
+          , "original_body" : idea.body
         };
       });
       res.render( "index.jade", { "ideas": ideas } );
