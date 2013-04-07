@@ -1,0 +1,11 @@
+a.idea-title
+  h2= idea.title
+div.well
+  p.idea-body
+    !{idea.body}
+  p.time
+    - if (typeof(idea.date) == "string"){
+      = idea.date
+    - } else {
+      At #{idea.date.toLocaleTimeString().split(":").splice(0, 2).join(":")} on #{idea.date.toLocaleDateString()}
+    - }

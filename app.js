@@ -2,7 +2,7 @@ var express = require( "express" ),
     mongojs = require( "mongojs" ),
     moment = require( "moment" ),
     markdown = require( "markdown" ).markdown;
-    
+
 var app = express.createServer( express.logger() ),
     db_uri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || "gameideas",
     db = mongojs.connect( db_uri, [ "ideas" ] );
@@ -14,10 +14,9 @@ app.use(express.static( __dirname + '/public' ));
 app.use( express.bodyParser() );
 
 app.get( "/", function(req, res) {
-  db.ideas.find().sort({ date: 1 }, function( err, collection ){
-    var ideas;    
+  db.ideas.find().sort({ date: -1 }, function( err, collection ){
     if ( !err ) {
-      
+
       ideas = collection.map(function( idea ){
         return {
             "body": markdown.toHTML( idea.body )
@@ -25,16 +24,13 @@ app.get( "/", function(req, res) {
           , "date": idea.date
         };
       });
-      console.log(ideas);
       res.render( "index.jade", { "ideas": ideas } );
-      
     }
   });
 });
 
 app.post( "/create", function( req, res ){
   if ( !req.body.idea || !req.body.title ) {
-    console.log("pling");
     res.send(400);
   }
 
@@ -44,7 +40,6 @@ app.post( "/create", function( req, res ){
     , "date": new Date()
   }, function( err ){
     if ( err ){
-      console.log("plong");
       res.send(500);
     }
 
