@@ -1,14 +1,13 @@
-.idea
-  a(href="#").idea-title
-    h2= idea.title
-  div.well
-    a(href="#").idea-edit-link [edit]
-    div.idea-body
-        | !{idea.body}
-    p.time
-      - if (typeof(idea.date) == "string"){
-        = idea.date
-      - } else {
-        | At #{idea.date.toLocaleTimeString().split(":").splice(0, 2).join(":")} on #{idea.date.toLocaleDateString()}
-      - }
-    input(type="hidden", value="#{idea.original_body}", class="idea-original")
+a(href="#").idea-title
+  h2= idea.title
+div.well
+  a(href="#").idea-edit-link [edit]
+  div.idea-body
+      | !{idea.body}
+  p.time
+    - if (typeof idea.date == "string"){
+      = idea.date
+    - } else {
+      | At #{idea.date.toLocaleTimeString().split(":").splice(0, 2).join(":")} on #{idea.date.toLocaleDateString()}
+    - }
+  input(type="hidden", value="#{idea.original_body}", class="idea-original")

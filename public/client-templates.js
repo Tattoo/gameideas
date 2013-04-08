@@ -189,21 +189,23 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<a class="idea-title"><h2>');
+buf.push('<a href="#" class="idea-title"><h2>');
 var __val__ = idea.title
 buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</h2></a><div class="well"><p class="idea-body">' + ((interp = idea.body) == null ? '' : interp) + '</p><p class="time">');
- if (typeof(idea.date) == "string"){
+buf.push('</h2></a><div class="well"><a href="#" class="idea-edit-link">[edit]</a><div class="idea-body">' + ((interp = idea.body) == null ? '' : interp) + '</div><p class="time">');
+ if (typeof idea.date == "string"){
 {
 var __val__ = idea.date
 buf.push(escape(null == __val__ ? "" : __val__));
 }
  } else {
 {
-buf.push('<At>' + escape((interp = idea.date.toLocaleTimeString().split(":").splice(0, 2).join(":")) == null ? '' : interp) + ' on ' + escape((interp = idea.date.toLocaleDateString()) == null ? '' : interp) + '</At>');
+buf.push('At ' + escape((interp = idea.date.toLocaleTimeString().split(":").splice(0, 2).join(":")) == null ? '' : interp) + ' on ' + escape((interp = idea.date.toLocaleDateString()) == null ? '' : interp) + '');
 }
  }
-buf.push('</p></div>');
+buf.push('</p><input');
+buf.push(attrs({ 'type':("hidden"), 'value':("" + (idea.original_body) + ""), "class": ("idea-original") }, {"type":true,"value":true,"class":true}));
+buf.push('/></div>');
 }
 return buf.join("");
 }
