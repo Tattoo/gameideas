@@ -1,5 +1,5 @@
 body {
-  background: #2c4762 url(/img/background.png) top repeat-x; 
+  background: #2c4762 url(/img/background.png) top repeat-x;
 }
 
 h1,
@@ -11,6 +11,15 @@ h3 {
 a:hover {
   text-decoration: none;
   cursor: pointer;
+}
+
+#background {
+  position: absolute;
+  top: 0%;
+  bottom: 0%;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
 }
 
 #container {
@@ -105,4 +114,39 @@ a:hover {
 
 .edit-title {
   margin-top: 1em;
+}
+/*
+  see: https://github.com/twitter/bootstrap/issues/471
+  slightly modified from first jsfiddle
+*/
+.btn.loading {
+    background-image: -webkit-gradient(linear, 0 0, 100% 100%,
+        color-stop(.25, rgba(0, 0, 0, .10)),
+        color-stop(.25, transparent),
+        color-stop(.5, transparent),
+        color-stop(.5, rgba(0, 0, 0, .10)),
+        color-stop(.75, rgba(0, 0, 0, .10)),
+        color-stop(.75, transparent),
+        to(transparent));
+    background-image:
+        -moz-linear-gradient(-45deg,
+            rgba(0, 0, 0, .10) 25%,
+            transparent 25%,
+            transparent 50%, rgba(0, 0, 0, .10) 50%,
+            rgba(0, 0, 0, .10) 75%,
+            transparent 75%, transparent
+        );
+    background-size: 100px 100px;
+    -moz-background-size: 100px 100px;
+    -webkit-background-size: 100px 100px;
+    -webkit-animation: animate-stripes 2s linear infinite;
+}
+
+@-webkit-keyframes animate-stripes {
+    from {
+        background-position: 0 0;
+    }
+    to {
+       background-position: -200px 0;
+    }
 }

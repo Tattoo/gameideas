@@ -23,6 +23,7 @@ app.get( "/", function(req, res) {
           , "title": idea.title
           , "date": idea.date
           , "original_body" : idea.body
+          , "id": idea._id
         };
       });
       res.render( "index.jade", { "ideas": ideas } );
@@ -30,8 +31,12 @@ app.get( "/", function(req, res) {
   });
 });
 
+function _valid( req ) {
+  return ( req.body.idea && req.body.title );
+}
+
 app.post( "/create", function( req, res ){
-  if ( !req.body.idea || !req.body.title ) {
+  if ( !_valid(req) ){
     res.send(400);
   }
 
@@ -39,11 +44,32 @@ app.post( "/create", function( req, res ){
       "body": req.body.idea
     , "title": req.body.title
     , "date": new Date()
-  }, function( err ){
+  }, function( err, idea ){
     if ( err ){
       res.send(500);
     }
 
+    res.send(idea._id);
+  });
+
+});
+
+app.post( "/update", function( req, res ){
+  if ( !_valid(req) ){
+    res.send(400);
+  }
+
+  if ( !req.body.id ){
+    res.send(400);
+  }
+  db.ideas.update({"_id": db.ObjectId(req.body.id)}, { $set: {
+      "body": req.body.idea
+    , "title": req.body.title
+  }}, function( err, foo ){
+    if ( err ){
+      console.log(err);
+      res.send(400);
+    }
     res.send(200);
   });
 });
