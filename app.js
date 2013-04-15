@@ -9,7 +9,8 @@ var app = express.createServer( express.logger() ),
     db_uri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || "gameideas",
     db = mongojs.connect( db_uri, [ "ideas" ] ),
     sendgrid = new SendGrid( process.env.SENDGRID_USERNAME, process.env.SENDGRID_PASSWORD ),
-    send_email = !!process.env.PRODUCTION;
+    send_email = !!process.env.PRODUCTION,
+    email_recepients = ["tatu.kairi@gmail.com"];
 
 app.set( "views", __dirname + "/public" );
 app.set( "view options", { "layout": false} );
@@ -54,6 +55,15 @@ app.post( "/create", function( req, res ){
     }
 
     res.send(idea._id);
+
+    if ( send_email ){
+      sendgrid.send({
+        to: email_recepients,
+        from: 'gameideas@gameideas.herokuapp.com',
+        subject: "Created: " + req.body.title,
+        text: "Hi!\n\nSomebody created game idea titled: " + req.body.title + "\n\nVisit http://gameideas.herokuapp.com to check it out!"
+      });
+    }
   });
 
 });
@@ -77,10 +87,10 @@ app.post( "/update", function( req, res ){
 
     if ( send_email ){
       sendgrid.send({
-        to: ["tatu.kairi@gmail.com", "mr_mystery00@hotmail.com"],
+        to: email_recepients,
         from: 'gameideas@gameideas.herokuapp.com',
-        subject: 'Hello World',
-        text: 'Sending email with NodeJS through SendGrid! http://gameideas.herokuapp.com'
+        subject: "Updated: " + req.body.title,
+        text: "Hi!\n\nSomebody updated game idea titled: " + req.body.title + "\n\nVisit http://gameideas.herokuapp.com to check it out!"
       });
     }
   });
