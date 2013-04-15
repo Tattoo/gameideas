@@ -77,10 +77,10 @@ app.post( "/update", function( req, res ){
 
     if ( send_email ){
       sendgrid.send({
-        to: "tatu.kairi@gmail.com",
+        to: ["tatu.kairi@gmail.com", "mr_mystery00@hotmail.com"],
         from: 'gameideas@gameideas.herokuapp.com',
         subject: 'Hello World',
-        text: 'Sending email with NodeJS through SendGrid!'
+        text: 'Sending email with NodeJS through SendGrid! http://gameideas.herokuapp.com'
       });
     }
   });
