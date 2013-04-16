@@ -10,7 +10,12 @@ var app = express.createServer( express.logger() ),
     db = mongojs.connect( db_uri, [ "ideas" ] ),
     sendgrid = new SendGrid( process.env.SENDGRID_USERNAME, process.env.SENDGRID_PASSWORD ),
     send_email = !!process.env.PRODUCTION,
-    email_recepients = ["tatu.kairi@gmail.com"];
+    email_recepients = [
+        "tatu.kairi@gmail.com"
+      , "eerovolaine@yahoo.com"
+      , "atte.vieno@googlemail.com"
+      , "jesse.laanti@gmail.com"
+    ];
 
 app.set( "views", __dirname + "/public" );
 app.set( "view options", { "layout": false} );
